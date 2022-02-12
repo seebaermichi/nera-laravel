@@ -80,11 +80,15 @@ it('it reads meta data and uses layout', function () {
 
     $this->assertStringContainsString('<title>Home</title>', $content);
     $this->assertStringContainsString(
-        '<meta name="description" content="This is Nera, a light weight static site generator" >',
+        '<meta name="description" content="This is Nera, a light weight static site generator">',
         $content
     );
     $this->assertStringContainsString(
-        '<meta name="keywords" content="nera, light weight, static site generator" >',
+        '<meta name="keywords" content="nera, light weight, static site generator">',
+        $content
+    );
+    $this->assertStringContainsString(
+        '<meta name="robots" content="index,follow">',
         $content
     );
     $this->assertStringContainsString(

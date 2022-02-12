@@ -6,12 +6,14 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>{{ $title }}</title>
+    <title>{{ $page->title }}</title>
 
-    <meta name="description" content="{{ $description }}" >
-    <meta name="keywords" content="{{ $keywords }}" >
+    @forelse($page->getMeta() as $key => $value)
+        <meta name="{{ $key }}" content="{{ $value }}">
+    @empty
+    @endforelse
 </head>
 <body>
-    {!! $content !!}
+    {!! $page->content !!}
 </body>
 </html>

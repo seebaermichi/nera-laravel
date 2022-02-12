@@ -4,7 +4,8 @@ namespace Nera\Nera\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use Nera\Nera\Services\MarkdownService;
+use Nera\Nera\Models\Page;
+use Nera\Nera\Services\PageService;
 
 class NeraCommand extends Command
 {
@@ -12,7 +13,7 @@ class NeraCommand extends Command
 
     public $description = 'Compiles Markdown files to Html files';
 
-    public function handle(MarkdownService $markdownService): int
+    public function handle(PageService $pageService): int
     {
         $inputPath = resource_path(config('nera.input_path'));
         $outputPath = storage_path(config('nera.output_path'));
@@ -23,27 +24,27 @@ class NeraCommand extends Command
             return self::FAILURE;
         }
 
+        if (File::isDirectory($outputPath)) {
+            File::deleteDirectory($outputPath);
+        }
+
         $markdownFiles = File::allFiles($inputPath);
         $this->output->info(sprintf('Processing %d Files', count($markdownFiles)));
         $progressBar = $this->output->createProgressBar(count($markdownFiles));
         $progressBar->start();
 
         foreach ($markdownFiles as $markdownFile) {
-            $pageData = $markdownService->getPageData($markdownFile);
-            $path = $outputPath . ($markdownFile->getRelativePath() !== ''
-                ? '/' . $markdownFile->getRelativePath()
-                : '');
-            $file = $path . '/' . str_replace('md', 'html', $markdownFile->getFilename());
+            $page = new Page($markdownFile);
 
-            if (! File::isDirectory($path)) {
-                File::makeDirectory($path);
+            if (! File::isDirectory($page->getDataProperty('path'))) {
+                File::makeDirectory($page->getDataProperty('path'));
             }
 
-            $html = isset($pageData['layout']) ? $markdownService->renderView($pageData) : $pageData['content'];
+            $html = $page->hasDataProperty('layout') ? $pageService->renderView($page) : $page->content;
 
-            File::put($file, $html);
+            File::put($page->getDataProperty('pathname'), $html);
 
-            $this->output->info('Writing ' . $file);
+            $this->output->info('Writing ' . $page->getDataProperty('pathname'));
             sleep(1);
             $progressBar->advance();
         }
