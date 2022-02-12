@@ -24,7 +24,7 @@ class Page
 
         $this->data = $markdown->getFrontMatter() ?? [];
         $this->setPath($fileInfo);
-        $this->setPathName($fileInfo);
+        $this->setPathname($fileInfo);
 
         $this->title = $this->getDataProperty('title') ?? '';
         $this->setMeta();
