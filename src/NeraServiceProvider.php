@@ -2,10 +2,10 @@
 
 namespace Nera\Nera;
 
+use Nera\Nera\Commands\InstallAddonCommand;
 use Nera\Nera\Commands\NeraCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Nera\Nera\Commands\InstallAddonCommand;
 
 class NeraServiceProvider extends PackageServiceProvider
 {
@@ -22,7 +22,7 @@ class NeraServiceProvider extends PackageServiceProvider
             ->hasMigration('create_nera_table')
             ->hasCommands([
                 NeraCommand::class,
-                InstallAddonCommand::class
+                InstallAddonCommand::class,
             ]);
     }
 }

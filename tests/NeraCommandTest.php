@@ -67,8 +67,10 @@ it('reads meta data and uses layout', function () {
         File::makeDirectory(resource_path($viewPath), 0777, true);
     }
 
-    File::put(resource_path(
-        $viewPath) . '/default.blade.php',
+    File::put(
+        resource_path(
+        $viewPath
+    ) . '/default.blade.php',
         file_get_contents(__DIR__ . '/Fixtures/pages/default.blade.php')
     );
     File::put($this->inputPath . '/test.md', file_get_contents(__DIR__ . '/Fixtures/test.md'));

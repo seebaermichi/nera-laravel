@@ -2,8 +2,6 @@
 
 namespace Nera\Nera\Models;
 
-use Illuminate\Support\Facades\Config;
-
 class Addon
 {
     public function __construct(private string $path)

@@ -3,11 +3,7 @@
 namespace Nera\Nera\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
 use Nera\Nera\Models\Addon;
-use Nera\Nera\Models\Page;
-use Nera\Nera\Services\PageService;
 
 class InstallAddonCommand extends Command
 {
@@ -22,6 +18,7 @@ class InstallAddonCommand extends Command
         }
 
         new Addon($this->argument('addon'));
+
         return self::SUCCESS;
     }
 }

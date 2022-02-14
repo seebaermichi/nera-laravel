@@ -2,7 +2,6 @@
 
 namespace Nera\Nera\Models;
 
-use Illuminate\Support\Facades\File;
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Extension\FrontMatter\Data\SymfonyYamlFrontMatterParser;
 use League\CommonMark\Extension\FrontMatter\FrontMatterParser;
@@ -16,8 +15,7 @@ class Page
 
     public function __construct(
         SplFileInfo $fileInfo
-    )
-    {
+    ) {
         $commonMarkConverter = new CommonMarkConverter();
         $parser = new FrontMatterParser(new SymfonyYamlFrontMatterParser());
         $markdown = $parser->parse($fileInfo->getContents());
@@ -54,7 +52,7 @@ class Page
 
     public function getDataProperty(string $key): mixed
     {
-        if (!array_key_exists($key, $this->data)) {
+        if (! array_key_exists($key, $this->data)) {
             return null;
         }
 
@@ -79,7 +77,9 @@ class Page
     {
         $meta = [];
         foreach (config('nera.meta_tags') as $metaTag) {
-            if ($this->$metaTag !== '') $meta[$metaTag] = $this->$metaTag;
+            if ($this->$metaTag !== '') {
+                $meta[$metaTag] = $this->$metaTag;
+            }
         }
 
         return $meta;

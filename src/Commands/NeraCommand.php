@@ -51,6 +51,7 @@ class NeraCommand extends Command
 
         $progressBar->finish();
         $this->output->info('Done');
+
         return self::SUCCESS;
     }
 }
