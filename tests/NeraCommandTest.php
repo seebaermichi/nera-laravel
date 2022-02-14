@@ -21,14 +21,14 @@ afterEach(function () {
     File::deleteDirectory($this->outputPath);
 });
 
-it('it fails if configured input_path does not exist', function () {
+it('fails if configured input_path does not exist', function () {
     File::deleteDirectory($this->inputPath);
 
     artisan(NeraCommand::class)
         ->assertExitCode(Command::FAILURE);
 });
 
-it('it creates simple html files form markdown files', function () {
+it('creates simple html files form markdown files', function () {
     if (! File::isDirectory($this->inputPath)) {
         File::makeDirectory($this->inputPath, 0777, true);
     }
@@ -57,7 +57,7 @@ it('it creates simple html files form markdown files', function () {
     $this->assertCount(4, $htmlFiles);
 });
 
-it('it reads meta data and uses layout', function () {
+it('reads meta data and uses layout', function () {
     if (! File::isDirectory($this->inputPath)) {
         File::makeDirectory($this->inputPath, 0777, true);
     }

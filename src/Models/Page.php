@@ -25,6 +25,7 @@ class Page
         $this->data = $markdown->getFrontMatter() ?? [];
         $this->setPath($fileInfo);
         $this->setPathname($fileInfo);
+        $this->setUrl();
 
         $this->title = $this->getDataProperty('title') ?? '';
         $this->setMeta();
@@ -98,5 +99,10 @@ class Page
             $this->getDataProperty('path'),
             str_replace('md', 'html', $fileInfo->getFilename())
         );
+    }
+
+    private function setUrl()
+    {
+        $this->data['url'] = explode('public', $this->getDataProperty('pathname'))[1];
     }
 }
